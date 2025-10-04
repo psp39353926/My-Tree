@@ -16,7 +16,6 @@ addLayer("p", {
     exponent: 0.5, // Prestige currency exponent
     doReset(resettingLayer) {
         let keep = [];
-        if (hasMilestone('r',0)) keep.push(11)
         if (layers[resettingLayer].row > this.row) {
             layerDataReset("p", [])
             player[this.layer].upgrades = keep
@@ -38,12 +37,6 @@ addLayer("p", {
     ],
     layerShown(){return true},
     resetDescription: "Make particles",
-    infoboxes: {
-        lore: {
-            title: "bo",
-            body() { return "Your first particle" },
-        },
-    },
     upgrades: {
         11: {
             title: "Particle Boost",
@@ -61,8 +54,7 @@ addLayer("p", {
             cost: new Decimal(3),
             effect() {
                 let pointvalue = new Decimal(0);
-                if (hasUpgrade('r',13)) {pointvalue = player[this.layer].total}
-                else {pointvalue = player[this.layer].points}
+                {pointvalue = player[this.layer].points}
                 return pointvalue.add(1).pow(0.5)
             },
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
@@ -90,8 +82,7 @@ addLayer("p", {
             description: "Particles boost itself.",
             cost: new Decimal(25),
             effect() {
-                if (hasUpgrade('r',12)) return player[this.layer].points.add(1).pow(0.2)
-                else return player[this.layer].points.add(1).pow(0.1)
+                return player[this.layer].points.add(1).pow(0.1)
             },
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
         },
